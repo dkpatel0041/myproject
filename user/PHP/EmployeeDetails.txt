@@ -1,0 +1,72 @@
+from flask import Flask, render_template, request 
+app = Flask(__name__,template_folder="templates") 
+ 
+@app.route('/')
+def personalinfo():
+   return render_template('personalinfo.html')
+
+@app.route('/main' , methods = ['POST','GET']) 
+def main(): 
+   if request.method == 'POST': 
+      result = request.form 
+   return render_template("main.html", result=result) 
+
+
+if __name__ == '__main__':
+   app.run(debug=True)
+
+
+
+personalinfo.html
+
+<!DOCTYPE html>
+<html> 
+<head>
+	<title>Personal Information</title>
+</head>
+<body>
+	<form action="http://127.0.0.1:5000/main" method="POST" >
+		<label>Enter First Name : </label><br>
+		<input type="text" name="fname"><br>
+		
+		<label>Enter Last Name : </label><br>
+		<input type="text" name="lname"><br>
+		
+		<label>Enter Mobile No. : </label><br>
+		<input type="number" name="mno"><br>
+		
+		<label>Enter Age : </label><br>
+		<input type="number" name="age"><br><br>
+		
+		<input type="submit" value="Submit" > 
+	</form>	
+</body>
+</html>
+
+
+
+main.html
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		table,td,th{
+			border: 2px solid;
+		}
+	</style>
+</head>
+	<body>
+		<table>
+		{% for key, value in result.items() %} 
+		<tr> 
+			<th>{{key}}</th> 
+			<td>{{value}}</td> 
+		<tr> 
+		{% endfor %} 
+		</table>
+
+	</body>
+</html>
+

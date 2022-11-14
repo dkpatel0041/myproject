@@ -1,0 +1,66 @@
+from flask import Flask, render_template, request
+app = Flask(__name__) 
+
+@app.route('/check')
+def check():
+   return render_template('armstrong.html')
+
+@app.route('/num',methods=['POST','GET'])
+def num():
+   if request.method == 'POST':
+      num = request.form['arm']
+      sum = 0
+      chk = int(num)
+      temp = int(num)
+      while temp > 0:
+         digit = temp % 10
+         sum += digit ** 3
+         temp //= 10
+
+      if chk == sum:
+         msg = f"This Number is {num} Armstrong Number"
+         return render_template('armstrong.html',message=msg)
+      else:
+         msg = f"This Number is {num} Not Armstrong Number"
+         return render_template('armstrong.html',message=msg)
+
+
+armstrong.html
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>table</title>
+</head>
+<body>
+	<form action="http://127.0.0.1:5000/num" method="POST" >
+		<label>Enter Only digits : </label>
+		<input type="number" name="arm" placeholder="Enter Digits" required>
+		<br/>
+		<input type="submit" value="Submit" > 
+	</form>	
+	<h1>{{ message }}</h1>
+</body>
+</html>
+
+
+
+
+
+
+from flask import Flask, render_template, request
+app = Flask(__name__) 
+@app.route('/<int:number>') 
+def newnum(number): 
+   num=number  
+   sum1=0    
+   temp=num
+   while temp > 0: 
+      new = temp % 10
+      sum1 += new ** 3 
+      temp //= 10 
+ 
+   if num == sum1: 
+      return "Armstrong Number" 
+   else: 
+      return "Not Armstrong Number"
